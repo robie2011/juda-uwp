@@ -6,5 +6,69 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
-    <TextBlock>This is overview Page</TextBlock>
+    <Page.Resources>
+        <ResourceDictionary Source="ms-appx:/Styles/Styles.xaml" />
+    </Page.Resources>
+    <RelativePanel>
+        <!--Logo-->
+        <Grid x:Name="splash">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+            
+            <Image 
+                Grid.Row="0" 
+                Grid.Column="0"
+                x:Name="logo" 
+                Width="250" 
+                Height="250" 
+                Loaded="Image_Loaded" 
+                HorizontalAlignment="Left"
+                />
+            
+            <TextBlock 
+                Grid.Row="1" 
+                Grid.Column="0"                
+                Text="Juda" FontFamily="ms-appx:/Assets/Fonts/Arvo/Arvo-Bold.ttf#Arvo"                                 
+                FontSize="80"                 
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"                
+                ></TextBlock>
+        </Grid>
+
+        <!--Favorites-->
+        <TextBlock 
+            Style="{StaticResource HeaderTextBlockStyle}"
+            Margin="100, 25, 0, 0"
+            x:Name="textFavorites"
+            RelativePanel.RightOf="splash"
+            RelativePanel.AlignTopWithPanel="True"
+            Text="Favorites" />
+        <ListView 
+            x:Name="listFavorites"
+            RelativePanel.Below="textFavorites" 
+            RelativePanel.AlignLeftWith="textFavorites"
+            Margin="100, 0, 0, 0"
+            ></ListView>
+
+        
+        <!--Recently added-->
+        <TextBlock 
+            x:Name="textRecentlyAdded"
+            RelativePanel.Below="listFavorites"
+            RelativePanel.AlignLeftWith="textFavorites"
+            Style="{StaticResource HeaderTextBlockStyle}"
+            Margin="100, 25, 0, 0"
+            Text="Recently Added"
+            />
+        <ListView 
+            x:Name="listRecentlyAdded" 
+            RelativePanel.Below="textRecentlyAdded" 
+            RelativePanel.AlignLeftWith="textFavorites"
+            Margin="100, 0, 0, 0" />
+    </RelativePanel>
 </Page>

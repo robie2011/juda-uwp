@@ -86,3 +86,4 @@ Folgende Tags werden von dem System erkannt
 - Hamburger Menu, http://blogs.msdn.com/b/quick_thoughts/archive/2015/06/01/windows-10-build-your-first-hamburger-menu.aspx
 - Embed Font, https://invokeit.wordpress.com/2012/10/18/embed-use-custom-font-in-windows-8-store-apps-win8dev-winrt/
 - Styling with XML, http://www.wpftutorial.net/styles.html
+- Margin Property order,http://stackoverflow.com/questions/8522018/properties-order-in-margin
