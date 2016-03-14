@@ -46,7 +46,7 @@ namespace Juda_Uwp
 #if DEBUG
             if (System.Diagnostics.Debugger.IsAttached)
             {
-                this.DebugSettings.EnableFrameRateCounter = true;
+                // this.DebugSettings.EnableFrameRateCounter = true;
             }
 #endif
 
@@ -77,6 +77,11 @@ namespace Juda_Uwp
                 // parameter
                 rootFrame.Navigate(typeof(MainPage), e.Arguments);
             }
+
+            // Robert,http://igrali.com/2015/04/12/getting-started-with-splitview-control-in-universal-apps/
+            
+
+
             // Ensure the current window is active
             Window.Current.Activate();
         }

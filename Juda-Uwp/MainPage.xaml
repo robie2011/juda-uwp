@@ -4,10 +4,118 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:Juda_Uwp"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"    
     mc:Ignorable="d">
+    <SplitView x:Name="MainMenuSplitView" DisplayMode="CompactInline" IsPaneOpen="False" CompactPaneLength="50" OpenPaneLength="150">
+        <SplitView.Pane>
+            <StackPanel x:Name="SplitViewPanePanel">
+                <!--<RadioButton x:Name="BackRadioButton" Click="BackRadioButton_Click" Style="{StaticResource NavRadioButtonStyle}" Tag="&#xE112;" Background="Green" Content="Back" GroupName="Back"/>-->
+                <RadioButton x:Name="HamburgerRadioButton" Click="HamburgerRadioButton_Click" Style="{StaticResource NavRadioButtonStyle}" Tag="&#xE700;" Content="Juda" GroupName="Hamburger"/>
+                <RadioButton x:Name="OverviewRadioButton" Click="OverviewRadioButton_Click" Style="{StaticResource NavRadioButtonStyle}" Tag="&#xE80F;" Content="Overview" GroupName="Navigation"/>
+                <RadioButton x:Name="DirectoryRadioButton" Click="DirectoryRadioButton_Click" Style="{StaticResource NavRadioButtonStyle}" Tag="&#xE174;" Content="Directory" GroupName="Navigation"/>
+                <RadioButton x:Name="SearchRadioButton" Click="SearchRadioButton_Click" Style="{StaticResource NavRadioButtonStyle}" Tag="&#xE721;" Content="Search" GroupName="Navigation"/>
+                <RadioButton x:Name="FavoriteRadioButton" Click="FavoriteRadioButton_Click" Style="{StaticResource NavRadioButtonStyle}" Tag="&#xE735;" Content="Favorite" GroupName="Navigation"/>
+                <RadioButton x:Name="PlaylistRadioButton" Click="PlaylistRadioButton_Click" Style="{StaticResource NavRadioButtonStyle}" Tag="&#xE292;" Content="Playlist" GroupName="Navigation"/>
+                <RadioButton x:Name="SettingsRadioButton" Click="SettingsRadioButton_Click" Style="{StaticResource NavRadioButtonStyle}" Tag="&#xE115;" Content="Settings" GroupName="Navigation"/>
+            </StackPanel>
+        </SplitView.Pane>
+        <SplitView.Content>
+            <Grid>
+                <Frame x:Name="MainContentFrame" Margin="48 48 48 48" />
+            </Grid>
+        </SplitView.Content>
+        
+        <!--These are styles used to format the navigation buttons ... -->
+        <SplitView.Resources>
+            <SolidColorBrush x:Key="NavButtonPressedBackgroundBrush" Color="White" Opacity="0.3" />
+            <SolidColorBrush x:Key="JudaBaseColor" Color="#2E95FF" Opacity="1" />
+            <SolidColorBrush x:Key="NavButtonCheckedForeground" Color="White" Opacity="1" />
+            <SolidColorBrush x:Key="NavButtonHoverBackgroundBrush" Color="White" Opacity="0.1" />
 
-    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+            <Style x:Key="NavRadioButtonStyle" TargetType="RadioButton">
+                <Setter Property="Background" Value="Transparent"/>
+                <Setter Property="Padding" Value="3"/>
+                <Setter Property="HorizontalAlignment" Value="Stretch"/>
+                <Setter Property="VerticalAlignment" Value="Center"/>
+                <Setter Property="HorizontalContentAlignment" Value="Left"/>
+                <Setter Property="VerticalContentAlignment" Value="Center"/>
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="RadioButton">
+                            <Border BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}">
+                                <VisualStateManager.VisualStateGroups>
+                                    <VisualStateGroup x:Name="CommonStates">
+                                        <VisualState x:Name="Normal"/>
+                                        <VisualState x:Name="PointerOver"></VisualState>
+                                        <VisualState x:Name="Pressed">
+                                            <Storyboard>
+                                                <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Background" Storyboard.TargetName="BackgroundGrid">
+                                                    <DiscreteObjectKeyFrame KeyTime="0" Value="{StaticResource NavButtonPressedBackgroundBrush}"/>
+                                                </ObjectAnimationUsingKeyFrames>
+                                                <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Foreground" Storyboard.TargetName="Icon">
+                                                    <DiscreteObjectKeyFrame KeyTime="0" Value="{StaticResource JudaBaseColor}"/>
+                                                </ObjectAnimationUsingKeyFrames>
+                                                <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Foreground" Storyboard.TargetName="ContentPresenter">
+                                                    <DiscreteObjectKeyFrame KeyTime="0" Value="{StaticResource JudaBaseColor}"/>
+                                                </ObjectAnimationUsingKeyFrames>
+                                            </Storyboard>
+                                        </VisualState>
+                                        <VisualState x:Name="Disabled" />
+                                    </VisualStateGroup>
+                                    <VisualStateGroup x:Name="CheckStates">
+                                        <VisualState x:Name="Checked">
+                                            <Storyboard>
+                                                <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Background" Storyboard.TargetName="BackgroundGrid">
+                                                    <DiscreteObjectKeyFrame KeyTime="0" Value="{StaticResource JudaBaseColor}"/>
+                                                </ObjectAnimationUsingKeyFrames>
+                                                <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Foreground" Storyboard.TargetName="Icon">
+                                                    <DiscreteObjectKeyFrame KeyTime="0" Value="{StaticResource NavButtonCheckedForeground}"/>
+                                                </ObjectAnimationUsingKeyFrames>
+                                                <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Foreground" Storyboard.TargetName="ContentPresenter">
+                                                    <DiscreteObjectKeyFrame KeyTime="0" Value="{StaticResource NavButtonCheckedForeground}"/>
+                                                </ObjectAnimationUsingKeyFrames>
+                                            </Storyboard>
+                                        </VisualState>
+                                        <VisualState x:Name="Unchecked"/>
+                                        <VisualState x:Name="Indeterminate"/>
+                                    </VisualStateGroup>
+                                    <VisualStateGroup x:Name="FocusStates">
+                                        <VisualState x:Name="Focused"/>
+                                        <VisualState x:Name="Unfocused"/>
+                                        <VisualState x:Name="PointerFocused"></VisualState>
+                                    </VisualStateGroup>
+                                </VisualStateManager.VisualStateGroups>
+                                <Grid Name="BackgroundGrid" Background="Transparent" VerticalAlignment="Stretch">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="48"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <TextBlock 
+                                        x:Name="Icon"                                        
+                                        FontSize="28" 
+                                        Text="{TemplateBinding Tag}" 
+                                        FontFamily="Segoe MDL2 Assets" 
+                                        Margin="5,8,5,5" 
+                                        VerticalAlignment="Center" 
+                                        HorizontalAlignment="Center"/>
 
-    </Grid>
+                                    <ContentPresenter 
+                                        x:Name="ContentPresenter" 
+                                        AutomationProperties.AccessibilityView="Raw" 
+                                        ContentTemplate="{TemplateBinding ContentTemplate}" 
+                                        ContentTransitions="{TemplateBinding ContentTransitions}" 
+                                        Content="{TemplateBinding Content}" 
+                                        Grid.Column="1" 
+                                        HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" 
+                                        Margin="{TemplateBinding Padding}" 
+                                        TextWrapping="Wrap" 
+                                        VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                                </Grid>
+                            </Border>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+        </SplitView.Resources>
+    </SplitView>
 </Page>

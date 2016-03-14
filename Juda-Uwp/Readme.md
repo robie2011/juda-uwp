@@ -80,3 +80,9 @@ Folgende Tags werden von dem System erkannt
 ![BILD1](http://www.imgshark.org/images/Screenshot_20160303-142342.png)
 
 ![BILD1](http://www.imgshark.org/images/Screenshot_20160303-142400.png)
+
+
+## Devs
+- Hamburger Menu, http://blogs.msdn.com/b/quick_thoughts/archive/2015/06/01/windows-10-build-your-first-hamburger-menu.aspx
+- Embed Font, https://invokeit.wordpress.com/2012/10/18/embed-use-custom-font-in-windows-8-store-apps-win8dev-winrt/
+- Styling with XML, http://www.wpftutorial.net/styles.html

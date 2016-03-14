@@ -92,12 +92,22 @@
     <Content Include="ApplicationInsights.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="Assets\Fonts\Arvo\Arvo-Bold.ttf" />
+    <Content Include="Assets\Fonts\Arvo\Arvo-BoldItalic.ttf" />
+    <Content Include="Assets\Fonts\Arvo\Arvo-Italic.ttf" />
+    <Content Include="Assets\Fonts\Arvo\Arvo-Regular.ttf" />
     <None Include="project.json" />
     <None Include="Readme.md" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Features\Overview\OverviewPage.xaml.cs">
+      <DependentUpon>OverviewPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Features\Search\SearchPage.xaml.cs">
+      <DependentUpon>SearchPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
@@ -111,6 +121,7 @@
     <None Include="Juda-Uwp_TemporaryKey.pfx" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Assets\Fonts\Arvo\OFL.txt" />
     <Content Include="Properties\Default.rd.xml" />
     <Content Include="Assets\LockScreenLogo.scale-200.png" />
     <Content Include="Assets\SplashScreen.scale-200.png" />
@@ -125,10 +136,21 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Page Include="Features\Overview\OverviewPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Features\Search\SearchPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="MainPage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Styles\" />
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>

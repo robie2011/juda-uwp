@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Juda_Uwp.Features.Overview;
+using Juda_Uwp.Features.Search;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -25,6 +27,46 @@ namespace Juda_Uwp
         public MainPage()
         {
             this.InitializeComponent();
+            this.MainContentFrame.Navigate(typeof(OverviewPage));
+        }
+
+        //private void HamburgerButton_Click(object sender, RoutedEventArgs e)
+        //{
+        //    MainMenuSplitView.IsPaneOpen = !MainMenuSplitView.IsPaneOpen;
+        //}
+
+        private void BackRadioButton_Click(object sender, RoutedEventArgs e)
+        {
+            var frame = DataContext as Frame;
+            if (frame?.CanGoBack == true)
+            {
+                frame.GoBack();
+            }
+        }
+
+        private void HamburgerRadioButton_Click(object sender, RoutedEventArgs e)
+        {
+            HamburgerRadioButton.IsChecked = false;
+            MainMenuSplitView.IsPaneOpen = !MainMenuSplitView.IsPaneOpen;
+        }
+
+
+        private void OverviewRadioButton_Click(object sender, RoutedEventArgs e) => NavigateIfNecessary(typeof(OverviewPage), OverviewRadioButton);
+        private void SearchRadioButton_Click(object sender, RoutedEventArgs e) => NavigateIfNecessary(typeof(SearchPage), SearchRadioButton);
+        private void DirectoryRadioButton_Click(object sender, RoutedEventArgs e) { }
+        private void FavoriteRadioButton_Click(object sender, RoutedEventArgs e) { }
+        private void PlaylistRadioButton_Click(object sender, RoutedEventArgs e) { }
+        private void SettingsRadioButton_Click(object sender, RoutedEventArgs e) { }
+
+        private void NavigateIfNecessary(Type pageType, RadioButton radioButton)
+        {
+            var frame = MainContentFrame;
+            var page = frame?.Content as Page;
+            if (page?.GetType() != pageType)
+            {
+                MainContentFrame.Navigate(pageType);
+                radioButton.IsChecked = true;
+            }
         }
     }
 }
