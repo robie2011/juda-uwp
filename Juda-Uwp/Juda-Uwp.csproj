@@ -112,6 +112,10 @@
     <Compile Include="MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Model\Artist.cs" />
+    <Compile Include="Model\Languages.cs" />
+    <Compile Include="Model\Mastersheet.cs" />
+    <Compile Include="Model\SongModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
