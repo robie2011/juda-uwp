@@ -11,21 +11,21 @@ namespace UnitTestProject
         public void CheckInternetRepositoryAllSongs()
         {
             var repo = new InternetMediaRepository();
-            var result = repo.GetAllSongs();
+            var result = repo.GetAllSongsMetaAsString();
         }
 
         [TestMethod]
         public void CheckInternetRepositoryMastersheet()
         {            
             var repo = new InternetMediaRepository();
-            var result = repo.GetMastersheet(99);
+            var result = repo.GetMastersheetAsString(99);
         }
 
         [TestMethod]
         public void TestConversion()
         {
             var mediaService = new MediaService(new InternetMediaRepository());
-            mediaService.GetAllSongs();
+            var songs = mediaService.GetAllSongs();
         }
     }
 }

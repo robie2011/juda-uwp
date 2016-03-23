@@ -11,10 +11,12 @@ namespace Juda_Uwp.Services
     public class MediaService
     {        
         private readonly IMediaRepository repository;
+        private IReadOnlyList<Song> songs;
 
         public MediaService(IMediaRepository repository)
         {
             this.repository = repository;
+            InitSongsMetaData();
         }
 
         public Mastersheet GetMastersheet(int songId)
@@ -22,21 +24,51 @@ namespace Juda_Uwp.Services
             throw new NotImplementedException();
         }
 
-        public IReadOnlyList<Song> GetAllSongs()
-        {
-            // liefert daten aus den lokalen datenbank/file (caching)
-            var jsonAllSongs = repository.GetAllSongs();
-            var songs = JsonConvert.DeserializeObject<List<JsonSongMetaRepresentation>>(jsonAllSongs);
-
-            throw new NotImplementedException();
-        }
+        public IReadOnlyList<Song> GetAllSongs() => songs;
 
         public void SyncRepositoryWithInternet()
         {
-            // ladet das komplete repo von internet
-            throw new NotImplementedException();
+
         }
 
+
+        private void InitSongsMetaData()
+        {
+            var jsonAllSongsMetaString = repository.GetAllSongsMetaAsString();
+            var jsonSongs = JsonConvert.DeserializeObject<List<JsonSongMetaRepresentation>>(jsonAllSongsMetaString);
+
+            var songs = new List<Song>(jsonSongs.Count);
+            foreach (var jsonSong in jsonSongs)
+            {
+                var artist = new Artist
+                {
+                    Id = jsonSong.artistId,
+                    Name = jsonSong.artistName
+                };
+
+                Album album = null;
+                if (jsonSong.albumId.HasValue)
+                {
+                    album = new Album
+                    {
+                        Id = jsonSong.albumId.Value,
+                        Name = jsonSong.albumName
+                    };
+                }
+
+                songs.Add(new Song
+                {
+                    Id = jsonSong.id,
+                    Name = jsonSong.name,
+                    Artist = artist,
+                    Album = album,
+                    SongSpeed = (SongSpeed)jsonSong.songTypeId,
+                    Language = (Languages)jsonSong.mainLanguageId
+                });
+            }
+
+            this.songs = songs.AsReadOnly();
+        }
 
         private class JsonSongMetaRepresentation
         {

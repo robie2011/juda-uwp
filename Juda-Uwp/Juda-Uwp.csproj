@@ -115,6 +115,7 @@
     <Compile Include="MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Model\Album.cs" />
     <Compile Include="Model\Artist.cs" />
     <Compile Include="Model\Languages.cs" />
     <Compile Include="Model\Mastersheet.cs" />

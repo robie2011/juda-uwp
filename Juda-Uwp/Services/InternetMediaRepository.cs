@@ -11,9 +11,9 @@ namespace Juda_Uwp.Services
     {
         private readonly string baseUrl = "http://juda.uf.to/api/Songs";
 
-        public string GetAllSongs() => MakeGetRequest(baseUrl).Result;
+        public string GetAllSongsMetaAsString() => MakeGetRequest(baseUrl).Result;
 
-        public string GetMastersheet(int songId) => MakeGetRequest($"{baseUrl}/{songId}/Mastersheet").Result;
+        public string GetMastersheetAsString(int songId) => MakeGetRequest($"{baseUrl}/{songId}/Mastersheet").Result;
 
         private async Task<string> MakeGetRequest(string Url)
         {
