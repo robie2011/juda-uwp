@@ -13,5 +13,6 @@ namespace Juda_Uwp.Model
         public string Name { get; set; }
         public Artist Artist { get; set; }
         public Languages Language { get; set; }
+        public SongSpeed SongSpeed { get; set; }
     }
 }

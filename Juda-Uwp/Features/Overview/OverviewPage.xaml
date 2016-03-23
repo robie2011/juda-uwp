@@ -5,7 +5,7 @@
     xmlns:local="using:Juda_Uwp.Features.Overview"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    mc:Ignorable="d">
+    mc:Ignorable="d" Height="575.004" Width="999.476">
     <Page.Resources>
         <ResourceDictionary Source="ms-appx:/Styles/Styles.xaml" />
     </Page.Resources>

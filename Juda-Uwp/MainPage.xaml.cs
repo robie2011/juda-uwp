@@ -1,5 +1,6 @@
 ﻿using Juda_Uwp.Features.Overview;
 using Juda_Uwp.Features.Search;
+using Juda_Uwp.Features.Settings;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -56,7 +57,7 @@ namespace Juda_Uwp
         private void DirectoryRadioButton_Click(object sender, RoutedEventArgs e) { }
         private void FavoriteRadioButton_Click(object sender, RoutedEventArgs e) { }
         private void PlaylistRadioButton_Click(object sender, RoutedEventArgs e) { }
-        private void SettingsRadioButton_Click(object sender, RoutedEventArgs e) { }
+        private void SettingsRadioButton_Click(object sender, RoutedEventArgs e) => NavigateIfNecessary(typeof(SettingsPage), SettingsRadioButton);
 
         private void NavigateIfNecessary(Type pageType, RadioButton radioButton)
         {
