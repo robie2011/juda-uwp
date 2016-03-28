@@ -6,5 +6,21 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
-    <TextBlock>Search. Not Implemented</TextBlock>
+
+    <RelativePanel>
+        <TextBlock
+            Style="{StaticResource HeaderTextBlockStyle}"
+            Margin="25, 25, 0, 0"
+            x:Name="searchTitle"
+            RelativePanel.AlignTopWithPanel="True"
+            Text="Search" />
+        <TextBox
+            x:Name="searchField"
+            HorizontalAlignment="Left"
+            Height="32"
+            TextWrapping="Wrap"
+            Text="Enter song name, artist, ..."
+            VerticalAlignment="Top"
+            Margin="25,120,0,0"/>
+    </RelativePanel>
 </Page>
