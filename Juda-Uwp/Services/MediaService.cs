@@ -1,4 +1,6 @@
 ﻿using Juda_Uwp.Model;
+using JudaMastersheetLib;
+using JudaMastersheetLib.Model;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -21,16 +23,19 @@ namespace Juda_Uwp.Services
 
         public Mastersheet GetMastersheet(int songId)
         {
-            throw new NotImplementedException();
+            var songText = GetSongTextOnly(songId);
+            return MastersheetConverter.Converter(songId, songText);
+        }
+
+        // For Testing Purpose
+        public string GetSongTextOnly(int songId)
+        {
+            var text = repository.GetMastersheetAsString(songId);
+            var jsonMasterSheetRepresentation = JsonConvert.DeserializeObject<JsonMastersheetRepresentation>(text);
+            return jsonMasterSheetRepresentation.text;
         }
 
         public IReadOnlyList<Song> GetAllSongs() => songs;
-
-        public void SyncRepositoryWithInternet()
-        {
-
-        }
-
 
         private void InitSongsMetaData()
         {
@@ -80,6 +85,12 @@ namespace Juda_Uwp.Services
             public string albumName { get; set; }
             public int mainLanguageId { get; set; }
             public int songTypeId { get; set; }
+        }
+
+        private class JsonMastersheetRepresentation
+        {
+            public int songId { get; set; }
+            public string text { get; set; }
         }
     }
 }

@@ -8,16 +8,16 @@ namespace JudaMastersheetLib
 {
     public class MastersheetConverter
     {
-        private const Languages defaultLanguage = Languages.English;
-        private readonly Dictionary<string, Languages> knownLanguageByTag = new Dictionary<string, Languages>()
+        private static readonly Dictionary<string, LanguageType> knownLanguageByTag = new Dictionary<string, LanguageType>()
         {
-            { "#english", Languages.English },
-            { "#german", Languages.German },
-            { "#tamil", Languages.Tamil },
-            { "#tamilpronounced", Languages.TamilPronounced }
+            { "#english", LanguageType.English },
+            { "#german", LanguageType.German },
+            { "#tamil", LanguageType.Tamil },
+            { "#tamilpronounced", LanguageType.TamilPronounced }
         };
 
-        private readonly Dictionary<string, SongPartType> knownSongPartTypeByTag = new Dictionary<string, SongPartType>()
+        //todo: better method for vers taggig -> Exception if vers > 6
+        private static readonly Dictionary<string, SongPartType> knownSongPartTypeByTag = new Dictionary<string, SongPartType>()
         {
             { "#vers1", SongPartType.Vers1 },
             { "#vers2", SongPartType.Vers2 },
@@ -25,29 +25,45 @@ namespace JudaMastersheetLib
             { "#vers4", SongPartType.Vers4 },
             { "#vers5", SongPartType.Vers5 },
             { "#vers6", SongPartType.Vers6 },
+            { "#vers7", SongPartType.Vers7 },
+            { "#vers8", SongPartType.Vers8 },
+            { "#vers9", SongPartType.Vers9 },
+            { "#vers10", SongPartType.Vers10 },
+            { "#vers11", SongPartType.Vers11 },
+            { "#vers12", SongPartType.Vers12 },
             { "#chorus", SongPartType.Chorus },
             { "#prechorus", SongPartType.PreChorus },
             { "#bridge", SongPartType.Bridge },
             { "#intro", SongPartType.Intro }
         };
 
-        private string lastLanguage = "#english";
-        private int defaultVersCounter = 1;
-
-        public Mastersheet Converter(string text)
+        public static Mastersheet Converter(int id, string text)
         {
+            var songLines = ExtractPartsWithLines(text);
+            var parserSongPartsWithoutDefaults = ExtractParts(songLines);
+            var parserSongPartsWithDefaults = GetParserSongPartsWithDefaults(parserSongPartsWithoutDefaults);
+            var parserSongPartsByLanguage = parserSongPartsWithDefaults.ToLookup(sp => sp.Language);
 
-            throw new NotImplementedException();
+            var languageVersions = new List<LanguageVersion>();
+            foreach (var parserSongParts in parserSongPartsByLanguage)
+            {
+                var songParts = parserSongParts
+                    .Select(s => new SongPart(s.SongPartType, s.Lines))
+                    .ToList();
+                var languageVersion = new LanguageVersion(parserSongParts.Key, songParts);
+                languageVersions.Add(languageVersion);
+            }
+
+            return new Mastersheet(id, languageVersions);
         }
 
-
-        private IReadOnlyList<SongLines> ExtractPartsWithLines(string text)
+        private static IReadOnlyList<ParserSongLines> ExtractPartsWithLines(string text)
         {
             var lines = text.Split('\n')
                 .ToList()
                 .Select(s => s.Trim());
 
-            var partCollection = new List<SongLines>();
+            var partCollection = new List<ParserSongLines>();
             var lastPart = new List<string>();
             var lastLineWasEmpty = true;
 
@@ -58,7 +74,7 @@ namespace JudaMastersheetLib
 
                 if (pageBreakDetected)
                 {
-                    partCollection.Add(new SongLines(lastPart));
+                    partCollection.Add(new ParserSongLines(lastPart));
                     lastPart = new List<string>();
                 }
                 else if (!emptyLineDetected)
@@ -71,43 +87,46 @@ namespace JudaMastersheetLib
 
             if(lastPart.Any())
             {
-                partCollection.Add(new SongLines(lastPart));
+                partCollection.Add(new ParserSongLines(lastPart));
             }
 
             return partCollection;
         }
 
-        private IReadOnlyList<SongPart> ExtractParts(IReadOnlyList<SongLines> listOfSongLines) =>
-            listOfSongLines
-            .Select(s => GetSongPart(s))
-            .ToList();
-
-        private SongPart GetSongPart(SongLines songLines)
+        private static IReadOnlyList<ParserSongPart> ExtractParts(IReadOnlyList<ParserSongLines> listOfSongLines)
         {
-            var songPartTag = string.Empty;
+            return listOfSongLines
+            .Select(s => GetParserSongPart(s))
+            .ToList();
+        }
+
+        private static ParserSongPart GetParserSongPart(ParserSongLines songLines)
+        {
+            var songPart = SongPartType.Undefined;
+            var songLanguage = LanguageType.Undefined;
 
             var lines = new List<string>();
 
             foreach (var line in songLines.Lines)
             {
-                var tagDetected = line[0] == '#';
-                if (tagDetected)
+                var tagNames = ExtractTags(line);
+                var lineIsUsedToForTagging = tagNames.Any();
+                if (lineIsUsedToForTagging)
                 {
-                    var tagname = line.ToLower();
-                    var languageIsKnown = knownLanguageByTag.ContainsKey(tagname);
-                    var languageHasChanged = languageIsKnown & lastLanguage != tagname;
-                    if (languageHasChanged)
+                    foreach (var tagname in tagNames)
                     {
-                        defaultVersCounter = 1;
-                        lastLanguage = tagname;
-                    }
-                    else if (knownSongPartTypeByTag.ContainsKey(tagname))
-                    {
-                        songPartTag = tagname;
-                    }
-                    else
-                    {
-                        // todo: inform about invalid tag
+                        if (knownLanguageByTag.ContainsKey(tagname))
+                        {
+                            songLanguage = knownLanguageByTag[tagname];
+                        }
+                        else if (knownSongPartTypeByTag.ContainsKey(tagname))
+                        {
+                            songPart = knownSongPartTypeByTag[tagname];
+                        }
+                        else
+                        {
+                            // todo: inform about invalid tag
+                        }
                     }
                 }
                 else
@@ -116,34 +135,85 @@ namespace JudaMastersheetLib
                 }
             }
 
-            if (songPartTag == string.Empty)
-            {
-                songPartTag = $"#vers{defaultVersCounter}";
-                defaultVersCounter++;
-            }
-
-            return new SongPart(lastLanguage, songPartTag, lines);
+            return new ParserSongPart(songLanguage, songPart, lines);
         }
 
-        private class SongPart
+        private static IReadOnlyList<ParserSongPart> GetParserSongPartsWithDefaults(IReadOnlyList<ParserSongPart> songParts)
         {
-            public readonly string Language;
-            public readonly string Partname;
-            public readonly IReadOnlyList<string> Lines;
+            var fallbackVersCounter = 1;
+            var modifiedSongParts = new List<ParserSongPart>(songParts.Count);
+            var firstSongPart = songParts.First();
+            var lastLanguage = firstSongPart.Language != LanguageType.Undefined
+                ? firstSongPart.Language
+                : DetectLanguage(firstSongPart.Lines, LanguageType.English); 
 
-            public SongPart(string language, string partname, IReadOnlyList<string> lines)
+            foreach (var songPart in songParts)
+            {
+                var modifiedLanguage = songPart.Language != LanguageType.Undefined
+                    ? songPart.Language
+                    : DetectLanguage(songPart.Lines, lastLanguage);
+
+                if (lastLanguage != modifiedLanguage)
+                {
+                    fallbackVersCounter = 1;
+                    lastLanguage = modifiedLanguage;
+                }
+
+                var modifiedSongPartType = songPart.SongPartType != SongPartType.Undefined
+                    ? songPart.SongPartType
+                    : knownSongPartTypeByTag["#vers" + fallbackVersCounter++];
+
+                modifiedSongParts.Add(new ParserSongPart(modifiedLanguage, modifiedSongPartType, songPart.Lines));
+            }
+            return modifiedSongParts;
+        }
+
+        private const char TamilUnicodeStart = '\u0B80';
+        private const char TamilUnicodeEnd = '\u0BFF';
+
+        private static LanguageType DetectLanguage(IReadOnlyList<string> lines, LanguageType fallBackLanguage)
+        {
+            var firstChar = lines.First()[0];
+            if (firstChar >= TamilUnicodeStart && firstChar <= TamilUnicodeEnd)
+            {
+                return LanguageType.Tamil;
+            }
+
+            return fallBackLanguage;
+        }
+
+        private static IReadOnlyList<string> ExtractTags(string line)
+        {
+            var tags = new List<string>();
+            var lineStartWithTags = line != null && line.Length > 1 && line[0] == '#';
+            if (lineStartWithTags)
+            {
+                tags = line.Split(' ')
+                    .Select(s => s.Trim().ToLower())
+                    .Where(s => s.Length > 1 && s[0] == '#')
+                    .ToList();
+            }
+
+            return tags;
+        }
+
+        private class ParserSongPart
+        {
+            public readonly LanguageType Language;
+            public readonly SongPartType SongPartType;
+            public readonly IReadOnlyList<string> Lines;
+            public ParserSongPart(LanguageType language, SongPartType songPartType, IReadOnlyList<string> lines)
             {
                 this.Language = language;
-                this.Partname = partname;
+                this.SongPartType = songPartType;
                 this.Lines = lines;
             }
         }
 
-        private class SongLines
+        private class ParserSongLines
         {
             public readonly IReadOnlyList<string> Lines;
-
-            public SongLines(IReadOnlyList<string> lines)
+            public ParserSongLines(IReadOnlyList<string> lines)
             {
                 this.Lines = lines;
             }

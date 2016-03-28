@@ -175,7 +175,12 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Page>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\JudaMastersheetLib\JudaMastersheetLib.csproj">
+      <Project>{f0fde11a-ba8b-4dcd-bee0-42d09943e40f}</Project>
+      <Name>JudaMastersheetLib</Name>
+    </ProjectReference>
+  </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>
   </PropertyGroup>

@@ -6,9 +6,7 @@ using System.Threading.Tasks;
 
 namespace JudaMastersheetLib.Model
 {
-    enum Tags { }
-
-    public enum SongPartType : Tags
+    public enum SongPartType
     {
         Vers1,
         Vers2,
@@ -16,27 +14,52 @@ namespace JudaMastersheetLib.Model
         Vers4,
         Vers5,
         Vers6,
+        Vers7,
+        Vers8,
+        Vers9,
+        Vers10,
+        Vers11,
+        Vers12,
         Chorus,
         PreChorus,
         Bridge,
-        Intro
+        Intro,
+        Undefined
     }
 
     public class SongPart
     {
-        public SongPartType SongPartType { get; set; }
-        public string[] Lines { get; set; }
+        public SongPartType SongPartType;
+        public IReadOnlyList<string> Lines;
+
+        public SongPart(SongPartType songPartType, IReadOnlyList<string> lines)
+        {
+            this.SongPartType = songPartType;
+            this.Lines = lines;
+        }
     }
 
     public class LanguageVersion
     {
-        public Languages Language { get; set; }
-        public SongPart[] SongParts { get; set; }
+        public LanguageType LanguageType;
+        public IReadOnlyList<SongPart> SongParts;
+
+        public LanguageVersion(LanguageType languageType, IReadOnlyList<SongPart> songParts)
+        {
+            this.LanguageType = languageType;
+            this.SongParts = songParts;
+        }
     }
 
     public class Mastersheet
     {
-        public int SongId { get; set; }
-        public LanguageVersion[] LanguageVersions { get; set; }
+        public int SongId;
+        public IReadOnlyList<LanguageVersion> LanguageVersions;
+
+        public Mastersheet(int songId, IReadOnlyList<LanguageVersion> languageVersions)
+        {
+            this.SongId = songId;
+            this.LanguageVersions = languageVersions;
+        }
     }
 }

@@ -6,12 +6,13 @@ using System.Threading.Tasks;
 
 namespace JudaMastersheetLib.Model
 {
-    public enum Languages
+    public enum LanguageType
     {
         //todo: verifiy Ids
         English = 1,
         German = 2,
         Tamil = 3,
-        TamilPronounced = 4
+        TamilPronounced = 4,
+        Undefined = 100
     }
 }

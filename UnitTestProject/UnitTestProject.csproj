@@ -128,6 +128,10 @@
       <Project>{71f199b8-9d86-4ca7-bebd-eaf8b584027b}</Project>
       <Name>Juda-Uwp</Name>
     </ProjectReference>
+    <ProjectReference Include="..\JudaMastersheetLib\JudaMastersheetLib.csproj">
+      <Project>{f0fde11a-ba8b-4dcd-bee0-42d09943e40f}</Project>
+      <Name>JudaMastersheetLib</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Service Include="{82A7F48D-3B50-4B1E-B82E-3ADA8210C358}" />
