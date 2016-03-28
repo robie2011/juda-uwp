@@ -118,7 +118,6 @@
     <Compile Include="Model\Album.cs" />
     <Compile Include="Model\Artist.cs" />
     <Compile Include="Model\Languages.cs" />
-    <Compile Include="Model\Mastersheet.cs" />
     <Compile Include="Model\Song.cs" />
     <Compile Include="Model\SongSpeed.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

@@ -4,9 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Juda_Uwp.Model
+namespace JudaMastersheetLib.Model
 {
-    public enum SongPartType
+    enum Tags { }
+
+    public enum SongPartType : Tags
     {
         Vers1,
         Vers2,
