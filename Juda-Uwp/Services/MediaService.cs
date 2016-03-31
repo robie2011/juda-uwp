@@ -21,16 +21,15 @@ namespace Juda_Uwp.Services
             InitSongsMetaData();
         }
 
-        public Mastersheet GetMastersheet(int songId)
+        public async Task<Mastersheet> GetMastersheet(int songId)
         {
-            var songText = GetSongTextOnly(songId);
+            var songText = await GetSongTextOnly(songId);
             return MastersheetConverter.Converter(songId, songText);
         }
 
-        // For Testing Purpose
-        public string GetSongTextOnly(int songId)
+        public async Task<string> GetSongTextOnly(int songId)
         {
-            var text = repository.GetMastersheetAsString(songId);
+            var text = await repository.GetMastersheetAsStringAsync(songId);
             var jsonMasterSheetRepresentation = JsonConvert.DeserializeObject<JsonMastersheetRepresentation>(text);
             return jsonMasterSheetRepresentation.text;
         }
@@ -39,7 +38,7 @@ namespace Juda_Uwp.Services
 
         private void InitSongsMetaData()
         {
-            var jsonAllSongsMetaString = repository.GetAllSongsMetaAsString();
+            var jsonAllSongsMetaString = repository.GetAllSongsMetaAsStringAsync().Result;
             var jsonSongs = JsonConvert.DeserializeObject<List<JsonSongMetaRepresentation>>(jsonAllSongsMetaString);
 
             var songs = new List<Song>(jsonSongs.Count);
