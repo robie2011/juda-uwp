@@ -17,14 +17,14 @@ namespace UnitTestProject
         public void CheckInternetRepositoryAllSongs()
         {
             var repo = new InternetMediaRepository();
-            var result = repo.GetAllSongsMetaAsString();
+            var result = repo.GetAllSongsMetaAsStringAsync();
         }
 
         [TestMethod]
         public void CheckInternetRepositoryMastersheet()
         {            
             var repo = new InternetMediaRepository();
-            var result = repo.GetMastersheetAsString(99);
+            var result = repo.GetMastersheetAsStringAsync(99);
         }
 
         [TestMethod]
@@ -39,7 +39,7 @@ namespace UnitTestProject
 
         private void AssertLanguagesAndSongPartType(int mastersheetId, IReadOnlyList<LanguageType> languages, IReadOnlyList<SongPartType> songPartTypes)
         {
-            var sheet = mediaService.GetSongTextOnly(mastersheetId);
+            var sheet = mediaService.GetSongTextOnly(mastersheetId).Result;
             var mastersheet = MastersheetConverter.Converter(mastersheetId, sheet);
             var sheetLanguages = new HashSet<LanguageType>(mastersheet.LanguageVersions.Select(l => l.LanguageType));
             var sheetSongPartTypes = new HashSet<SongPartType>(mastersheet.LanguageVersions.SelectMany(l => l.SongParts).Select(s => s.SongPartType));

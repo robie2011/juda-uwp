@@ -8,7 +8,7 @@ namespace Juda_Uwp.Services
 {
     public interface IMediaRepository
     {
-        string GetAllSongsMetaAsString();
-        string GetMastersheetAsString(int songId);
+        Task<string> GetAllSongsMetaAsStringAsync();
+        Task<string> GetMastersheetAsStringAsync(int songId);
     }
 }

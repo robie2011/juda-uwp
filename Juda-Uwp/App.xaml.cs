@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Juda_Uwp.Services;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -33,6 +34,13 @@ namespace Juda_Uwp
                 Microsoft.ApplicationInsights.WindowsCollectors.Session);
             this.InitializeComponent();
             this.Suspending += OnSuspending;
+            InitRepo();
+        }
+        public MediaService MediaService { get; private set; }
+        private void InitRepo()
+        {
+            var repo = new InternetMediaRepository();
+            MediaService = new MediaService(repo);
         }
 
         /// <summary>
