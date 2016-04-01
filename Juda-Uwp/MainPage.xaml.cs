@@ -1,4 +1,5 @@
-﻿using Juda_Uwp.Features.Overview;
+﻿using Juda_Uwp.Features;
+using Juda_Uwp.Features.Overview;
 using Juda_Uwp.Features.Search;
 using Juda_Uwp.Features.Settings;
 using System;
@@ -54,7 +55,7 @@ namespace Juda_Uwp
 
         private void OverviewRadioButton_Click(object sender, RoutedEventArgs e) => NavigateIfNecessary(typeof(OverviewPage), OverviewRadioButton);
         private void SearchRadioButton_Click(object sender, RoutedEventArgs e) => NavigateIfNecessary(typeof(SearchPage), SearchRadioButton);
-        private void DirectoryRadioButton_Click(object sender, RoutedEventArgs e) { }
+        private void DirectoryRadioButton_Click(object sender, RoutedEventArgs e) => NavigateIfNecessary(typeof(DirectoryPage), DirectoryRadioButton);
         private void FavoriteRadioButton_Click(object sender, RoutedEventArgs e) { }
         private void PlaylistRadioButton_Click(object sender, RoutedEventArgs e) { }
         private void SettingsRadioButton_Click(object sender, RoutedEventArgs e) => NavigateIfNecessary(typeof(SettingsPage), SettingsRadioButton);

@@ -1,4 +1,5 @@
 ﻿using Juda_Uwp.Services;
+using Juda_Uwp.ViewModel;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -14,24 +15,22 @@ using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 
-// The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=234238
-
-namespace Juda_Uwp.Features.Settings
+namespace Juda_Uwp.Features
 {
     /// <summary>
-    /// An empty page that can be used on its own or navigated to within a Frame.
+    /// Directory Page
     /// </summary>
-    public sealed partial class SettingsPage : Page
+    public sealed partial class DirectoryPage : Page
     {
-        public SettingsPage()
+        private SongViewModel ViewModel { get; set; }
+
+        public DirectoryPage()
         {
             this.InitializeComponent();
+
+            // var repo = new InternetMediaRepository(); // TODO: use the media service created in App.xaml.cs
+            this.ViewModel = new SongViewModel(null);
         }
 
-        private void SyncNow_Click(object sender, RoutedEventArgs e)
-        {
-            IMediaRepository repo = new InternetMediaRepository();
-            MediaService mediaService = new MediaService(repo);
-        }
     }
 }
