@@ -2,8 +2,6 @@
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
 
-// Die Elementvorlage "Leere Seite" ist unter http://go.microsoft.com/fwlink/?LinkId=234238 dokumentiert.
-
 namespace Juda_Uwp.Features.SongView
 {
 
@@ -16,11 +14,13 @@ namespace Juda_Uwp.Features.SongView
             this.InitializeComponent();
         }
 
-        protected override void OnNavigatedTo(NavigationEventArgs e)
+        async protected override void OnNavigatedTo(NavigationEventArgs e)
         {
             base.OnNavigatedTo(e);
             var song = e.Parameter as Song;
             songTitle.Text = song.Name;
+            songArtist.Text = $"Written by {song.Artist.Name}";
+            songText.Text = await (App.Current as App).MediaService.GetSongTextOnly(song.Id);
         }
 
     }

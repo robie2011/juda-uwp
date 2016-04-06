@@ -15,7 +15,16 @@
         <TextBlock 
             Style="{StaticResource HeaderTextBlockStyle}"
             Margin="25, 25, 0, 0"
-            x:Name="songTitle"
-            RelativePanel.AlignTopWithPanel="True" />
+            x:Name="songTitle" />
+        <TextBlock
+            x:Name="songArtist"
+            Margin="25, 25, 0, 0"
+            RelativePanel.AlignLeftWith="songTitle"
+            RelativePanel.Below="songTitle" />
+        <TextBlock
+            x:Name="songText"
+            Margin="25, 25, 0, 0"
+            RelativePanel.AlignLeftWith="songTitle"
+            RelativePanel.Below="songArtist" />
     </RelativePanel>
 </Page>
