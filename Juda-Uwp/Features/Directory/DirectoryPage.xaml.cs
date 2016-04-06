@@ -1,4 +1,5 @@
-﻿using Juda_Uwp.Services;
+﻿using Juda_Uwp.Features.SongView;
+using Juda_Uwp.Services;
 using Juda_Uwp.ViewModel;
 using System;
 using System.Collections.Generic;
@@ -32,5 +33,10 @@ namespace Juda_Uwp.Features.Directory
             this.ViewModel = new SongViewModel(mediaService);
         }
 
+        private void ChooseSong(object sender, TappedRoutedEventArgs e)
+        {
+            var song = SongDirectory.SelectedItem;
+            this.Frame.Navigate(typeof(SongViewPage), song);
+        }
     }
 }

@@ -19,7 +19,7 @@
             x:Name="textTitle"
             RelativePanel.AlignTopWithPanel="True"
             Text="Directory" />
-        <ListView ItemsSource="{x:Bind ViewModel.Songs}" Margin="25, 120, 0, 0" HorizontalAlignment="Center" VerticalAlignment="Center">
+        <ListView x:Name="SongDirectory" ItemsSource="{x:Bind ViewModel.Songs}" Margin="25, 120, 0, 0" HorizontalAlignment="Center" VerticalAlignment="Center" Tapped="ChooseSong">
             <ListView.ItemTemplate>
                 <DataTemplate x:DataType="model:Song">
                     <TextBlock Text="{x:Bind Name}" />
