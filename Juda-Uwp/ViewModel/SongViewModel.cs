@@ -1,11 +1,6 @@
 ﻿using Juda_Uwp.Model;
 using Juda_Uwp.Services;
-using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Juda_Uwp.ViewModel
 {
