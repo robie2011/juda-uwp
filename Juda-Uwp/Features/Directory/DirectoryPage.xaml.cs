@@ -15,7 +15,7 @@ using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 
-namespace Juda_Uwp.Features
+namespace Juda_Uwp.Features.Directory
 {
     /// <summary>
     /// Directory Page
@@ -28,8 +28,8 @@ namespace Juda_Uwp.Features
         {
             this.InitializeComponent();
 
-            // var repo = new InternetMediaRepository(); // TODO: use the media service created in App.xaml.cs
-            this.ViewModel = new SongViewModel(null);
+            var mediaService = (App.Current as App).MediaService;
+            this.ViewModel = new SongViewModel(mediaService);
         }
 
     }

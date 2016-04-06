@@ -1,4 +1,5 @@
 ﻿using Juda_Uwp.Features;
+using Juda_Uwp.Features.Directory;
 using Juda_Uwp.Features.Overview;
 using Juda_Uwp.Features.Search;
 using Juda_Uwp.Features.Settings;

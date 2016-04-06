@@ -1,5 +1,5 @@
 ﻿<Page
-    x:Class="Juda_Uwp.Features.DirectoryPage"
+    x:Class="Juda_Uwp.Features.Directory.DirectoryPage"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:Juda_Uwp.Features.Directory"
@@ -24,7 +24,7 @@
                 <DataTemplate x:DataType="model:Song">
                     <TextBlock Text="{x:Bind Name}" />
                 </DataTemplate>
-            </ListView.ItemTemplate>            
+            </ListView.ItemTemplate>
         </ListView>
     </RelativePanel>
 </Page>

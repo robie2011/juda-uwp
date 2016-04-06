@@ -16,17 +16,17 @@ namespace Juda_Uwp.ViewModel
 
         public SongViewModel(MediaService mediaService)
         {
-            //foreach(var song in mediaService.GetAllSongs())
-            //{
-            //    songs.Add(song);
-            //}
-
-            for (int i = 1; i <= 5; i++)
+            foreach (var song in mediaService.GetAllSongs())
             {
-                var song = new Song();
-                song.Name = "Song " + i;
                 songs.Add(song);
             }
+
+            //for (int i = 1; i <= 5; i++)
+            //{
+            //    var song = new Song();
+            //    song.Name = "Song " + i;
+            //    songs.Add(song);
+            //}
         }
     }
 }
